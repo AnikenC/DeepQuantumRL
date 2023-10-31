@@ -174,8 +174,8 @@ class BatchedPhotonLangevinReadoutEnv(SingleStepEnvironment):
         )
     
     def determine_max_photon(self):
-        complex_action = jnp.ones_like(self.ts_action, dtype=jnp.complex64)
-        res_drive = self.res_amp_scaling * complex_action.astype(jnp.complex128)
+        real_action = jnp.ones_like(self.ts_action, dtype=jnp.float64)
+        res_drive = self.res_amp_scaling * real_action
         normalizing_factor = jnp.clip(self.max_signal_amp * self.res_amp_scaling / jnp.absolute(res_drive), 0.0, 1.0)
         res_drive *= normalizing_factor
         res_drive = self.drive_smoother(res_drive)
@@ -191,10 +191,10 @@ class BatchedPhotonLangevinReadoutEnv(SingleStepEnvironment):
         """Perform Single Episode State Transition"""
         new_timestep = state.timestep + 1
 
-        complex_action = (
+        real_action = (
             action[:, 0 : params.num_actions]
         )
-        res_drive = self.res_amp_scaling * complex_action.astype(jnp.complex128)
+        res_drive = self.res_amp_scaling * real_action.astype(jnp.float64)
         normalizing_factor = jnp.clip(self.max_signal_amp * self.res_amp_scaling / jnp.absolute(res_drive), 0.0, 1.0)
         res_drive *= normalizing_factor
         res_drive = self.batched_smoother(res_drive)
