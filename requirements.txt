@@ -1,0 +1,10 @@
+matplotlib
+pylatexenc
+jax
+jaxlib
+diffrax
+distrax
+flax
+chex
+optax
+gymnax
