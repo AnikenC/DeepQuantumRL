@@ -8,3 +8,4 @@ flax
 chex
 optax
 gymnax
+jaxtyping>=0.2.23
