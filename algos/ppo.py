@@ -20,6 +20,9 @@ import matplotlib.pyplot as plt
 
 
 class SeparateActorCritic(nn.Module):
+    '''
+    Actor and Critic with Separate Feed-forward Neural Networks
+    '''
     action_dim: Sequence[int]
     activation: str = "tanh"
     layer_size: int = 128
@@ -68,6 +71,9 @@ class SeparateActorCritic(nn.Module):
 
 
 class CombinedActorCritic(nn.Module):
+    '''
+    Actor and Critic Class with combined Feed-forward Neural Network
+    '''
     action_dim: Sequence[int]
     activation: str = "tanh"
     layer_size: int = 128
@@ -108,6 +114,9 @@ class CombinedActorCritic(nn.Module):
 
 
 class Transition(NamedTuple):
+    '''
+    Class for carrying RL State between processes
+    '''
     # done: jnp.ndarray
     action: jnp.ndarray
     value: jnp.ndarray
@@ -118,6 +127,9 @@ class Transition(NamedTuple):
 
 
 def PPO_make_train(config):
+    '''
+    Function that returns a trainable function for an input configuration dictionary
+    '''
     config["MINIBATCH_SIZE"] = (
         config["NUM_ENVS"] * config["NUM_STEPS"] // config["NUM_MINIBATCHES"]
     )
@@ -167,6 +179,9 @@ def PPO_make_train(config):
             batchsize: int, 
             num_envs: int,
             ):
+        '''
+        Training function for environment
+        '''
         
         # MAKE CUSTOM ENV
         env = env_class(
